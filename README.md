@@ -52,6 +52,12 @@ docs/               installation and development guides
 - `telnet_exec` rejects config-write commands while `readOnly` is true (the default); writes require an explicit `readOnly:false` after user confirmation.
 - Remote output is returned verbatim (no redaction); execution and transfers consume real remote resources — confirm before acting.
 
+## Requirements and goals
+
+The full requirement background, design principles, target shape (unified
+connection model), and roadmap live in
+[docs/requirements.md](docs/requirements.md).
+
 ## Development
 
 See [docs/development.md](docs/development.md) for package conventions and how to add a new ops plugin, and [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow. Releases follow the `agent-ops-release` skill (unified version, tag-triggered publish).

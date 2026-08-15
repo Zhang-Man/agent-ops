@@ -65,5 +65,6 @@ pnpm run install:profile    # 把 agent-ops 插件 link 进 dsh profile（源码
 | --- | --- |
 | 本文件 | 仓库布局、命令、全局规则 |
 | [packages/AGENTS.md](packages/AGENTS.md) | 包级规则：SDK 约束、bundle 形态、测试纪律 |
+| [docs/requirements.zh.md](docs/requirements.zh.md) | 需求与目标：背景、设计原则、目标形态、路线图 |
 | [docs/installation.zh.md](docs/installation.zh.md) | 安装矩阵：全新 dsh、与 dsh-web-ui 共存、验证清单 |
 | [docs/development.zh.md](docs/development.zh.md) | 开发流程：本地调试、新增插件、发布 |

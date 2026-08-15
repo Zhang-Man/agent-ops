@@ -52,6 +52,11 @@ docs/               安装与开发指南
 - `telnet_exec` 在 `readOnly`（默认开启）下拒绝写入类命令；写配置须显式 `readOnly:false` 且先经用户确认。
 - 远程输出原样返回（不脱敏）；执行与传输消耗真实远程资源，先确认再操作。
 
+## 需求与目标
+
+完整的需求背景、设计原则、目标形态（统一连接模型）与路线图见
+[docs/requirements.zh.md](docs/requirements.zh.md)。
+
 ## 开发
 
 包约定与新增运维插件的做法见 [docs/development.zh.md](docs/development.zh.md)，贡献流程见 [CONTRIBUTING.md](CONTRIBUTING.md)。发版走 `agent-ops-release` 技能（全仓统一版本、tag 触发发布）。
