@@ -1,0 +1,29 @@
+{
+  "name": "@linxin666/agent-ops-all",
+  "description": "Aggregate bundle for the agent-ops remote-operations family: installs and mounts the dsh-ssh and dsh-telnet plugins together.",
+  "version": "0.1.13",
+  "type": "module",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "cordis.patch.yml",
+    "aggregate.yml",
+    "README.md",
+    "README.zh.md"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhu1090093659/agent-ops.git"
+  },
+  "dependencies": {
+    "@linxin666/dsh-ssh": "workspace:*",
+    "@linxin666/dsh-telnet": "workspace:*"
+  }
+}

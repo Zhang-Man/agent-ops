@@ -1,0 +1,11 @@
+# dsh-telnet bundle patch: inserts the host-half plugin row into the web
+# profile roster. Applied as a profile bundle layer (the `dsh.bundle.patch`
+# manifest field) over dsh-base; activate with
+# `dsh plugin --profile <name> add link:~/agent-ops/packages/dsh-telnet`.
+#
+# The row is a bare plugin by package name: the node half (exports ".") runs
+# in the host process (telnet engine, device store, agent tools). No browser
+# half yet.
+- insert:
+    - id: telnet
+      name: '@linxin666/dsh-telnet'

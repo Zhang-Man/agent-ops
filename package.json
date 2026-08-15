@@ -1,0 +1,19 @@
+{
+  "name": "agent-ops",
+  "version": "0.1.13",
+  "private": true,
+  "description": "DeepSeek Harness remote-operations plugin family: SSH server ops plus Telnet network-device ops, one installable family.",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "aggregate:check": "node scripts/aggregate.mjs --check",
+    "test:scripts": "node --test scripts/*.test.mjs",
+    "install:profile": "node scripts/install.mjs"
+  },
+  "devDependencies": {
+    "lightningcss": "^1.32.0",
+    "tsdown": "^0.22.2"
+  },
+  "license": "Apache-2.0"
+}
