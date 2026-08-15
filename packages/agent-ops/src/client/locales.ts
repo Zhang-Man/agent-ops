@@ -3,9 +3,9 @@
  */
 
 export const zh = {
-  'entry.label': 'SSH',
-  'entry.tooltip': '远程 SSH 运维面板',
-  'panel.title': '远程 SSH',
+  'entry.label': '远程运维',
+  'entry.tooltip': '远程运维面板（SSH 服务器 / Telnet 网络设备）',
+  'panel.title': '远程运维',
   'tab.hosts': '主机',
   'tab.terminal': '终端',
   'tab.transfer': '传输',
@@ -140,9 +140,9 @@ export const zh = {
 } as const
 
 export const en: Record<keyof typeof zh, string> = {
-  'entry.label': 'SSH',
-  'entry.tooltip': 'Remote SSH operations panel',
-  'panel.title': 'Remote SSH',
+  'entry.label': 'Remote ops',
+  'entry.tooltip': 'Remote operations panel (SSH servers / Telnet network devices)',
+  'panel.title': 'Remote ops',
   'tab.hosts': 'Hosts',
   'tab.terminal': 'Terminal',
   'tab.transfer': 'Transfer',
