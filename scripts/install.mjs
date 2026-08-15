@@ -58,8 +58,7 @@ const WEB_UI_INDIVIDUAL = [
   '@linxin666/dsh-remote-web-ui',
   '@linxin666/dsh-live-stats',
   '@linxin666/dsh-tool-describe-image',
-  '@linxin666/dsh-liangshen',
-  '@linxin666/dsh-skins',
+    '@linxin666/dsh-skins',
 ]
 
 /** Every standalone bundle package under packages/ (a package.json with

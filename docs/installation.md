@@ -38,7 +38,7 @@ dsh plugin --profile web remove @linxin666/dsh-web-ui-all
 dsh plugin --profile web add @linxin666/dsh-client-ui-web-ui-settings \
   @linxin666/dsh-client-ui-aionui-panel @linxin666/dsh-client-ui-task-board \
   @linxin666/dsh-client-ui-git-graph @linxin666/dsh-pet @linxin666/dsh-remote-web-ui \
-  @linxin666/dsh-live-stats @linxin666/dsh-tool-describe-image @linxin666/dsh-liangshen \
+  @linxin666/dsh-live-stats @linxin666/dsh-tool-describe-image \
   @linxin666/dsh-skins
 ```
 
