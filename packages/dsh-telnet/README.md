@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-A Telnet plugin for DeepSeek Harness (DSH), sibling of [`@linxin666/dsh-ssh`](../dsh-ssh) in the agent-ops family: a short-lived Telnet engine (minimal RFC 854) inside the Host process + a network-device config store + Agent tools, all implemented through the official NPM SDK without modifying DSH source.
+A Telnet plugin for DeepSeek Harness (DSH), sibling of [`@zhangman2235/dsh-ssh`](../dsh-ssh) in the agent-ops family: a short-lived Telnet engine (minimal RFC 854) inside the Host process + a network-device config store + Agent tools, all implemented through the official NPM SDK without modifying DSH source.
 
 ## Capabilities
 

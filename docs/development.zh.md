@@ -6,8 +6,8 @@
 
 ```sh
 pnpm install                     # 首次
-pnpm --filter @linxin666/dsh-telnet build   # 构建单个包
-pnpm --filter @linxin666/dsh-telnet test    # 跑单个包测试
+pnpm --filter @zhangman2235/dsh-telnet build   # 构建单个包
+pnpm --filter @zhangman2235/dsh-telnet test    # 跑单个包测试
 pnpm run install:profile         # link 进 web profile（含组合校验）
 # 重启 `dsh web`，在新会话中实际调用工具验证
 ```

@@ -6,8 +6,8 @@ Package conventions, the local development loop, and how to add a new ops plugin
 
 ```sh
 pnpm install                     # once
-pnpm --filter @linxin666/dsh-telnet build   # build one package
-pnpm --filter @linxin666/dsh-telnet test    # run one package's tests
+pnpm --filter @zhangman2235/dsh-telnet build   # build one package
+pnpm --filter @zhangman2235/dsh-telnet test    # run one package's tests
 pnpm run install:profile         # link into the web profile (+ verify composition)
 # restart `dsh web`, then exercise the tools in a session
 ```

@@ -18,7 +18,7 @@ Two usage workflows, shaped by the bundled `agent-remote-ops` preset (`presets/a
 
 ```sh
 # npm (after the family is published)
-dsh plugin --profile web add @linxin666/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops-all
 
 # source (development)
 git clone https://github.com/Zhang-Man/agent-ops.git

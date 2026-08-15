@@ -3,7 +3,7 @@
 [English](README.md) | 中文
 
 为 DeepSeek Harness（DSH）定制的网络设备 Telnet 插件，与
-[`@linxin666/dsh-ssh`](../dsh-ssh) 同属 agent-ops 全家桶：Host 进程内的
+[`@zhangman2235/dsh-ssh`](../dsh-ssh) 同属 agent-ops 全家桶：Host 进程内的
 短连接 Telnet 引擎（RFC 854 最小实现）+ 设备配置存储 + Agent 工具，全部通过
 官方 NPM SDK 实现，不修改 DSH 源码。
 

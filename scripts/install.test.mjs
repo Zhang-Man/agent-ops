@@ -3,34 +3,31 @@
  */
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { bundlePackages, fixBundles } from './install.mjs'
+import { bundlePackages, webUiAllGuard } from './install.mjs'
 
-test('fixBundles keeps dsh-ssh bundle when web-ui-all is absent', () => {
-  const result = fixBundles(['@deepseek-ai/dsh-base', '@linxin666/agent-ops-all', '@linxin666/dsh-ssh'], ['@linxin666/agent-ops-all'])
-  assert.equal(result.changed, false)
-  assert.deepEqual(result.bundles, ['@deepseek-ai/dsh-base', '@linxin666/agent-ops-all', '@linxin666/dsh-ssh'])
+test('webUiAllGuard allows profiles without the web-ui aggregate', () => {
+  const result = webUiAllGuard(['@zhangman2235/dsh-ssh', '@zhangman2235/dsh-telnet'])
+  assert.equal(result.blocked, false)
+  assert.deepEqual(result.commands, [])
 })
 
-test('fixBundles drops the duplicate ssh row when web-ui-all is present', () => {
-  const result = fixBundles(
-    ['@deepseek-ai/dsh-base', '@linxin666/dsh-web-ui-all', '@linxin666/dsh-ssh'],
-    ['@linxin666/dsh-web-ui-all', '@linxin666/dsh-ssh'],
-  )
-  assert.equal(result.changed, true)
-  assert.deepEqual(result.removed, ['@linxin666/dsh-ssh'])
-  assert.deepEqual(result.bundles, ['@deepseek-ai/dsh-base', '@linxin666/dsh-web-ui-all'])
-})
-
-test('fixBundles is idempotent', () => {
-  const once = fixBundles(['@linxin666/dsh-web-ui-all'], ['@linxin666/dsh-web-ui-all', '@linxin666/dsh-ssh'])
-  const twice = fixBundles(once.bundles, ['@linxin666/dsh-web-ui-all', '@linxin666/dsh-ssh'])
-  assert.equal(twice.changed, false)
+test('webUiAllGuard blocks the conflicting web-ui aggregate with guidance', () => {
+  const result = webUiAllGuard(['@linxin666/dsh-web-ui-all', '@zhangman2235/dsh-ssh'])
+  assert.equal(result.blocked, true)
+  assert.ok(result.reason.includes('collides'))
+  assert.equal(result.commands.length, 2)
+  assert.ok(result.commands[0].includes('remove @linxin666/dsh-web-ui-all'))
+  assert.ok(result.commands[1].includes('@linxin666/dsh-skins'))
+  assert.ok(!result.commands[1].includes('@linxin666/dsh-ssh'), 'the replacement list must exclude the conflicting ssh child')
 })
 
 test('bundlePackages discovers the two family bundles', () => {
   const packages = bundlePackages(new URL('..', import.meta.url).pathname)
   const names = packages.map((entry) => entry.pkgName).sort()
-  assert.ok(names.includes('@linxin666/dsh-ssh'))
-  assert.ok(names.includes('@linxin666/dsh-telnet'))
-  assert.ok(!names.includes('@linxin666/agent-ops-all'), 'the aggregate carrier is not a bundle itself')
+  assert.deepEqual(names, ['@zhangman2235/dsh-ssh', '@zhangman2235/dsh-telnet'])
+})
+
+test('bundlePackages excludes the aggregate carrier', () => {
+  const packages = bundlePackages(new URL('..', import.meta.url).pathname)
+  assert.ok(!packages.some((entry) => entry.pkgName === '@zhangman2235/agent-ops-all'))
 })

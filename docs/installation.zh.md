@@ -11,7 +11,7 @@ agent-ops 家族在 dsh 机器上的完整安装方式：全新 dsh、与 dsh-we
 ## npm 安装（发布后推荐）
 
 ```sh
-dsh plugin --profile web add @linxin666/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops-all
 ```
 
 聚合包会插入一条 `ssh` 行与一条 `telnet` 行并装齐两个插件，之后重启 `dsh web`。
@@ -34,21 +34,23 @@ dsh-web-ui 的共存修复，并用 `dsh --profile web --dump-config` 校验组�
 
 ## 与 dsh-web-ui 家族（皮肤、面板）共存
 
-`@linxin666/dsh-web-ui-all` 聚合包本身就会插入 `ssh` 行，而 dsh loader 拒绝
-重复行 id——因此要摘掉单装的 dsh-ssh bundle 行但保留依赖（web-ui-all 插入的
-`ssh` 行会解析到 agent-ops 的副本，因为 loader 从 profile 顶层按包名解析）。
-
-`scripts/install.mjs` 自动完成该修复。手动等价操作：
+`@linxin666/dsh-web-ui-all` 聚合包本身就会插入自己的 `ssh` 行（行名
+`@linxin666/dsh-ssh`），与本家族的 `ssh` 行 id 冲突——dsh loader 拒绝重复行
+id，没有静默绕过方式。共存做法：把聚合包替换为各单体 web-ui 包（即聚合包的
+全部内容除去它的 dsh-ssh 子包），再正常安装 agent-ops：
 
 ```sh
-dsh plugin --profile web add @linxin666/dsh-telnet
-dsh plugin --profile web add @linxin666/dsh-ssh
-# 然后编辑 ~/.dsh/profiles/web/package.json：
-#   从 dsh.profile.bundles 中移除 "@linxin666/dsh-ssh"，保留在 dependencies
+dsh plugin --profile web remove @linxin666/dsh-web-ui-all
+dsh plugin --profile web add @linxin666/dsh-client-ui-web-ui-settings \
+  @linxin666/dsh-client-ui-aionui-panel @linxin666/dsh-client-ui-task-board \
+  @linxin666/dsh-client-ui-git-graph @linxin666/dsh-pet @linxin666/dsh-remote-web-ui \
+  @linxin666/dsh-live-stats @linxin666/dsh-tool-describe-image @linxin666/dsh-liangshen \
+  @linxin666/dsh-skins
 ```
 
-不要同时安装 `@linxin666/agent-ops-all` 与 `@linxin666/dsh-web-ui-all`
-（两者都会插入 `ssh` 行）。共存场景用单体包 + 修复。
+`scripts/install.mjs` 检测到该聚合包时会打印上述指引并中止，而不是装一半。
+同样不要把 `@zhangman2235/agent-ops-all` 与 `@linxin666/dsh-web-ui-all` 同时
+安装——行 id 冲突相同。
 
 ## agent-remote-ops 预设（推荐）
 

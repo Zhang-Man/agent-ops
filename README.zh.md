@@ -18,7 +18,7 @@ agent-ops 是面向 [DeepSeek Harness（DSH）](https://github.com/deepseek-ai/D
 
 ```sh
 # npm 安装（发布后）
-dsh plugin --profile web add @linxin666/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops-all
 
 # 源码安装（开发调试）
 git clone https://github.com/Zhang-Man/agent-ops.git

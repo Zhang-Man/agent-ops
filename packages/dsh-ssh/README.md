@@ -33,7 +33,7 @@ Install the family aggregate package `@linxin666/dsh-web-ui-all` (all plugins an
 
 ```sh
 ### 从 npm 安装（推荐）
-dsh plugin --profile web add @linxin666/dsh-ssh
+dsh plugin --profile web add @zhangman2235/dsh-ssh
 
 ### 从仓库安装（开发调试）
 git clone https://github.com/Zhang-Man/agent-ops.git
@@ -57,9 +57,9 @@ The settings panel (plugin config) toggles `announceToAgent` (whether to announc
 ## Development
 
 ```sh
-pnpm install --filter @linxin666/dsh-ssh...
-pnpm --filter @linxin666/dsh-ssh test    # unit tests: store + engine (embedded ssh2 Server + real sshd)
-pnpm --filter @linxin666/dsh-ssh build   # tsc types + tsdown dual-half artifacts
+pnpm install --filter @zhangman2235/dsh-ssh...
+pnpm --filter @zhangman2235/dsh-ssh test    # unit tests: store + engine (embedded ssh2 Server + real sshd)
+pnpm --filter @zhangman2235/dsh-ssh build   # tsc types + tsdown dual-half artifacts
 ```
 
 ## Known limitations

@@ -12,7 +12,7 @@ One-package installer for the [agent-ops](../..) remote-operations family: insta
 ## Install
 
 ```sh
-dsh plugin --profile web add @linxin666/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops-all
 ```
 
 Restart `dsh web`. See [docs/installation.md](../../docs/installation.md) for the full install matrix and the coexistence rules with the dsh-web-ui family.

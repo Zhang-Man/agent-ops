@@ -14,7 +14,7 @@
 ## 安装
 
 ```sh
-dsh plugin --profile web add @linxin666/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops-all
 ```
 
 重启 `dsh web`。完整安装矩阵及与 dsh-web-ui 家族的共存规则见

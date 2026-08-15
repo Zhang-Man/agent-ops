@@ -1,5 +1,5 @@
 {
-  "name": "@linxin666/dsh-telnet",
+  "name": "@zhangman2235/dsh-telnet",
   "description": "Remote Telnet operations for the dsh web GUI: a network-device store (~/.dsh/dsh-telnet.json), a minimal RFC 854 telnet engine (login / enable / paging / prompt detection) and agent tools (telnet_list, telnet_add, telnet_exec, telnet_remove). Hot-pluggable — mounted via a profile node_modules link, no dsh source changes.",
   "version": "0.1.13",
   "type": "module",

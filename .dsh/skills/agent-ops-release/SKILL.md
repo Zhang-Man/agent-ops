@@ -1,7 +1,7 @@
 ---
 name: agent-ops-release
-description: Release and publish the agent-ops monorepo (dsh-ssh + dsh-telnet remote-ops plugin family) — bump all packages to one unified version, commit and tag, push the vX.Y.Z tag that triggers the GitHub Actions publish pipeline, and verify the npm publish. Covers post-release verification and bad-version recovery. Use when the user asks to 发布/发版/release/bump 版本/publish agent-ops or any @linxin666/dsh-ssh / @linxin666/dsh-telnet / @linxin666/agent-ops-all package.
-whenToUse: The user wants to release agent-ops (发布新版、发个版本、release、tag、publish @linxin666/dsh-ssh / @linxin666/dsh-telnet / @linxin666/agent-ops-all), build or change the release pipeline (release 管线、CI 发布), or recover from a bad published version (坏包、回滚、deprecate). Not for routine commits or code changes.
+description: Release and publish the agent-ops monorepo (dsh-ssh + dsh-telnet remote-ops plugin family) — bump all packages to one unified version, commit and tag, push the vX.Y.Z tag that triggers the GitHub Actions publish pipeline, and verify the npm publish. Covers post-release verification and bad-version recovery. Use when the user asks to 发布/发版/release/bump 版本/publish agent-ops or any @zhangman2235/dsh-ssh / @zhangman2235/dsh-telnet / @zhangman2235/agent-ops-all package.
+whenToUse: The user wants to release agent-ops (发布新版、发个版本、release、tag、publish @zhangman2235/dsh-ssh / @zhangman2235/dsh-telnet / @zhangman2235/agent-ops-all), build or change the release pipeline (release 管线、CI 发布), or recover from a bad published version (坏包、回滚、deprecate). Not for routine commits or code changes.
 ---
 
 # agent-ops 发布（release / publish）
@@ -89,9 +89,9 @@ git push origin "vX.Y.Z"            # 推送 tag 即触发发布管线（唯一�
 ## 4. 发布后验证（必须逐项执行）
 
 ```sh
-npm view @linxin666/agent-ops-all version   # 期望 = X.Y.Z
-npm view @linxin666/dsh-ssh version
-npm view @linxin666/dsh-telnet version
+npm view @zhangman2235/agent-ops-all version   # 期望 = X.Y.Z
+npm view @zhangman2235/dsh-ssh version
+npm view @zhangman2235/dsh-telnet version
 git ls-remote --tags origin | grep "vX.Y.Z" # tag 已在远端
 ```
 

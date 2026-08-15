@@ -59,7 +59,7 @@ pnpm run install:profile    # 把两个插件包 link 进 dsh profile（源码�
   `scripts/verify-version.mjs` 校验）；npm 不允许重发已发布版本号。
 - 发布流程见 `.dsh/skills/agent-ops-release/SKILL.md`：本地全绿 → 统一 bump →
   提交 → 推 vX.Y.Z tag 触发 Actions 发布管线。
-- 发布后验证：`npm view @linxin666/agent-ops-all version` 等于 tag 版本。
+- 发布后验证：`npm view @zhangman2235/agent-ops-all version` 等于 tag 版本。
 
 ## 分层指令体系
 

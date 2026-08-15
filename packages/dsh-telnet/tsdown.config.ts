@@ -8,7 +8,7 @@
  */
 import { clientBundle } from '../../shared/tsdown.client.ts'
 
-export default clientBundle('@linxin666/dsh-telnet', ['src/index.ts', 'src/invariant.ts'], {
+export default clientBundle('@zhangman2235/dsh-telnet', ['src/index.ts', 'src/invariant.ts'], {
   libExternal: [
     '@deepseek-ai/dsh-llm',
     '@deepseek-ai/dsh-system-prompt',

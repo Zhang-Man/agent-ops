@@ -17,10 +17,10 @@ importers:
 
   packages/agent-ops-all:
     dependencies:
-      '@linxin666/dsh-ssh':
+      '@zhangman2235/dsh-ssh':
         specifier: workspace:*
         version: link:../dsh-ssh
-      '@linxin666/dsh-telnet':
+      '@zhangman2235/dsh-telnet':
         specifier: workspace:*
         version: link:../dsh-telnet
 

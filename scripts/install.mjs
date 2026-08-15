@@ -6,16 +6,14 @@
  * "dsh.bundle.patch"): `dsh plugin --profile <name> add link:<absolute path>`
  * — the same official flow a user runs by hand per package.
  *
- * Then two fixups the official flow does not cover:
- *   1. Coexistence with @linxin666/dsh-web-ui-all: that aggregate already
- *      inserts the `ssh` row, so the standalone dsh-ssh bundle row would be a
- *      duplicate (the dsh loader rejects duplicate row ids). The fix drops
- *      '@linxin666/dsh-ssh' from dsh.profile.bundles but keeps it in
- *      dependencies — the row inserted by web-ui-all then resolves to the
- *      top-level (agent-ops) copy because the loader resolves row package
- *      names from the profile root.
- *   2. Verification: `dsh --profile <name> --dump-config` must show exactly
- *      one `ssh` row and one `telnet` row.
+ * Compatibility guard: the profile must NOT depend on
+ * @linxin666/dsh-web-ui-all. That aggregate inserts its own `ssh` row (name
+ * @linxin666/dsh-ssh), which collides with this family's `ssh` row id — the
+ * dsh loader rejects duplicate row ids. Install the individual web-ui
+ * packages (skins, panels) instead; the guard prints the exact commands.
+ *
+ * Then verification: `dsh --profile <name> --dump-config` must show exactly
+ * one `ssh` row and one `telnet` row.
  *
  * The agent-ops-all aggregate is NOT linked from source: its workspace:*
  * dependencies only resolve after publishing, so source installs link the
@@ -29,7 +27,7 @@
  *   node scripts/install.mjs --dry-run       # report without changing
  */
 import { execFileSync, spawnSync } from 'node:child_process'
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { dirname, join, resolve as resolvePath } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -45,6 +43,24 @@ const dryRun = args.includes('--dry-run')
 const DSH_HOME = process.env.DSH_HOME ?? join(homedir(), '.dsh')
 const PROFILE_DIR = join(DSH_HOME, 'profiles', profile)
 const PROFILE_PKG = join(PROFILE_DIR, 'package.json')
+
+/** The web-ui aggregate that conflicts with this family's ssh row. */
+const WEB_UI_ALL = '@linxin666/dsh-web-ui-all'
+
+/** The individual web-ui packages that replace the aggregate in coexistence
+ * setups (everything the aggregate bundles except its dsh-ssh child). */
+const WEB_UI_INDIVIDUAL = [
+  '@linxin666/dsh-client-ui-web-ui-settings',
+  '@linxin666/dsh-client-ui-aionui-panel',
+  '@linxin666/dsh-client-ui-task-board',
+  '@linxin666/dsh-client-ui-git-graph',
+  '@linxin666/dsh-pet',
+  '@linxin666/dsh-remote-web-ui',
+  '@linxin666/dsh-live-stats',
+  '@linxin666/dsh-tool-describe-image',
+  '@linxin666/dsh-liangshen',
+  '@linxin666/dsh-skins',
+]
 
 /** Every standalone bundle package under packages/ (a package.json with
  * dsh.bundle.patch, excluding aggregate carriers — those exist for npm
@@ -74,20 +90,24 @@ export function bundlePackages(repoRoot = REPO_ROOT) {
 }
 
 /**
- * Pure fixup decision: drop the standalone dsh-ssh bundle row when the
- * profile already depends on the dsh-web-ui-all aggregate (whose own patch
- * inserts the same row id). Returns the fixed bundles list and whether it
- * changed. Pure so it can be unit-tested without a dsh installation.
+ * Pure coexistence decision: whether the profile dependencies block the
+ * install (they contain the conflicting web-ui aggregate) and, when they do,
+ * the guidance lines explaining how to replace it. Pure so it can be
+ * unit-tested without a dsh installation.
  *
- * @param {string[]} bundles current dsh.profile.bundles
  * @param {string[]} dependencyNames current dependencies object keys
- * @returns {{ bundles: string[], changed: boolean, removed: string[] }}
+ * @returns {{ blocked: boolean, reason: string, commands: string[] }}
  */
-export function fixBundles(bundles, dependencyNames) {
-  const hasWebUiAll = dependencyNames.includes('@linxin666/dsh-web-ui-all')
-  if (!hasWebUiAll) return { bundles: [...bundles], changed: false, removed: [] }
-  const next = bundles.filter((entry) => entry !== '@linxin666/dsh-ssh')
-  return { bundles: next, changed: next.length !== bundles.length, removed: ['@linxin666/dsh-ssh'] }
+export function webUiAllGuard(dependencyNames, profile = 'web') {
+  if (!dependencyNames.includes(WEB_UI_ALL)) return { blocked: false, reason: '', commands: [] }
+  return {
+    blocked: true,
+    reason: `${WEB_UI_ALL} inserts its own ssh row (name @linxin666/dsh-ssh), which collides with this family's ssh row id; install the individual web-ui packages instead`,
+    commands: [
+      `dsh plugin --profile ${profile} remove ${WEB_UI_ALL}`,
+      `dsh plugin --profile ${profile} add ${WEB_UI_INDIVIDUAL.join(' ')}`,
+    ],
+  }
 }
 
 function readProfileManifest() {
@@ -98,10 +118,6 @@ function readProfileManifest() {
   return JSON.parse(readFileSync(PROFILE_PKG, 'utf8'))
 }
 
-function writeProfileManifest(manifest) {
-  writeFileSync(PROFILE_PKG, JSON.stringify(manifest, null, 2) + '\n')
-}
-
 function main() {
   const packages = bundlePackages()
   if (packages.length === 0) {
@@ -109,6 +125,17 @@ function main() {
     process.exit(1)
   }
   console.log(`install: profile '${profile}' (${PROFILE_DIR})${dryRun ? ' [dry-run]' : ''}`)
+
+  // 0. Compatibility guard against the web-ui aggregate.
+  const manifest = readProfileManifest()
+  const deps = Object.keys(manifest.dependencies ?? {})
+  const guard = webUiAllGuard(deps, profile)
+  if (guard.blocked) {
+    console.error(`install: blocked: ${guard.reason}`)
+    console.error('install: replace it with the individual web-ui packages, then rerun:')
+    for (const command of guard.commands) console.error(`  ${command}`)
+    process.exit(1)
+  }
 
   // 1. Link every bundle package through the official dsh CLI.
   for (const pkg of packages) {
@@ -122,20 +149,7 @@ function main() {
     }
   }
 
-  // 2. Coexistence fixup with the dsh-web-ui-all aggregate.
-  const manifest = readProfileManifest()
-  const bundles = manifest.dsh?.profile?.bundles ?? []
-  const deps = Object.keys(manifest.dependencies ?? {})
-  const fixed = fixBundles(bundles, deps)
-  if (fixed.changed) {
-    console.log('install: profile depends on @linxin666/dsh-web-ui-all (its patch already inserts the ssh row); removing the duplicate standalone dsh-ssh bundle entry (dependency kept, resolution stays on this repo)')
-    if (!dryRun) {
-      manifest.dsh.profile.bundles = fixed.bundles
-      writeProfileManifest(manifest)
-    }
-  }
-
-  // 3. Verification: exactly one row per agent-ops plugin id.
+  // 2. Verification: exactly one row per agent-ops plugin id.
   if (dryRun) {
     console.log('install: dry-run finished; no changes made')
     return
@@ -162,4 +176,4 @@ function main() {
   console.log('install: done. Restart `dsh web` to load the agent-ops plugins.')
 }
 
-main()
+if (import.meta.main) main()

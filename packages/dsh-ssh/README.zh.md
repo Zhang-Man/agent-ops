@@ -33,7 +33,7 @@
 
 ```sh
 ### 从 npm 安装（推荐）
-dsh plugin --profile web add @linxin666/dsh-ssh
+dsh plugin --profile web add @zhangman2235/dsh-ssh
 
 ### 从仓库安装（开发调试）
 git clone https://github.com/Zhang-Man/agent-ops.git
@@ -57,9 +57,9 @@ dsh plugin --profile web add link:$(pwd)/packages/dsh-ssh
 ## 开发
 
 ```sh
-pnpm install --filter @linxin666/dsh-ssh...
-pnpm --filter @linxin666/dsh-ssh test    # 单测：store + 引擎（内嵌 ssh2 Server + 真实 sshd）
-pnpm --filter @linxin666/dsh-ssh build   # tsc 类型 + tsdown 双半区产物
+pnpm install --filter @zhangman2235/dsh-ssh...
+pnpm --filter @zhangman2235/dsh-ssh test    # 单测：store + 引擎（内嵌 ssh2 Server + 真实 sshd）
+pnpm --filter @zhangman2235/dsh-ssh build   # tsc 类型 + tsdown 双半区产物
 ```
 
 ## 已知限制

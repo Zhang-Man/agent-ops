@@ -11,7 +11,7 @@ How to install the agent-ops family onto a dsh machine, covering a fresh dsh, co
 ## From npm (recommended once published)
 
 ```sh
-dsh plugin --profile web add @linxin666/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops-all
 ```
 
 The aggregate inserts one `ssh` row and one `telnet` row and installs both plugins. Restart `dsh web` afterwards.
@@ -31,18 +31,18 @@ The `agent-ops-all` aggregate is not linked from source: its `workspace:*` depen
 
 ## Coexisting with the dsh-web-ui family (skins, panels)
 
-The `@linxin666/dsh-web-ui-all` aggregate already inserts the `ssh` row; the dsh loader rejects duplicate row ids, so the standalone dsh-ssh bundle row must be dropped while the dependency stays (the `ssh` row inserted by web-ui-all then resolves to the agent-ops copy, because the loader resolves row package names from the profile root).
-
-`scripts/install.mjs` does this automatically. The manual equivalent:
+The `@linxin666/dsh-web-ui-all` aggregate inserts its own `ssh` row (name `@linxin666/dsh-ssh`), which collides with this family's `ssh` row id — the dsh loader rejects duplicate row ids. There is no silent workaround: replace the aggregate with the individual web-ui packages (everything it bundles except its dsh-ssh child), then install agent-ops normally:
 
 ```sh
-dsh plugin --profile web add @linxin666/dsh-telnet
-dsh plugin --profile web add @linxin666/dsh-ssh
-# then edit ~/.dsh/profiles/web/package.json:
-#   remove "@linxin666/dsh-ssh" from dsh.profile.bundles, keep it in dependencies
+dsh plugin --profile web remove @linxin666/dsh-web-ui-all
+dsh plugin --profile web add @linxin666/dsh-client-ui-web-ui-settings \
+  @linxin666/dsh-client-ui-aionui-panel @linxin666/dsh-client-ui-task-board \
+  @linxin666/dsh-client-ui-git-graph @linxin666/dsh-pet @linxin666/dsh-remote-web-ui \
+  @linxin666/dsh-live-stats @linxin666/dsh-tool-describe-image @linxin666/dsh-liangshen \
+  @linxin666/dsh-skins
 ```
 
-Do not install `@linxin666/agent-ops-all` together with `@linxin666/dsh-web-ui-all` (both insert the `ssh` row). Use the individual packages plus the fixup instead.
+`scripts/install.mjs` detects the aggregate and prints exactly this guidance instead of half-installing. Do not install `@zhangman2235/agent-ops-all` together with `@linxin666/dsh-web-ui-all` either — the same row-id collision applies.
 
 ## The agent-remote-ops preset (recommended)
 

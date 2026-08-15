@@ -1,5 +1,5 @@
 {
-  "name": "@linxin666/agent-ops-all",
+  "name": "@zhangman2235/agent-ops-all",
   "description": "Aggregate bundle for the agent-ops remote-operations family: installs and mounts the dsh-ssh and dsh-telnet plugins together.",
   "version": "0.1.13",
   "type": "module",
@@ -23,7 +23,7 @@
     "url": "https://github.com/Zhang-Man/agent-ops.git"
   },
   "dependencies": {
-    "@linxin666/dsh-ssh": "workspace:*",
-    "@linxin666/dsh-telnet": "workspace:*"
+    "@zhangman2235/dsh-ssh": "workspace:*",
+    "@zhangman2235/dsh-telnet": "workspace:*"
   }
 }

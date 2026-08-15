@@ -8,4 +8,4 @@
 # half yet.
 - insert:
     - id: telnet
-      name: '@linxin666/dsh-telnet'
+      name: '@zhangman2235/dsh-telnet'

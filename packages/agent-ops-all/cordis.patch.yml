@@ -5,9 +5,9 @@
 # from ../dsh-ssh
 - insert:
     - id: ssh
-      name: '@linxin666/dsh-ssh'
+      name: '@zhangman2235/dsh-ssh'
 
 # from ../dsh-telnet
 - insert:
     - id: telnet
-      name: '@linxin666/dsh-telnet'
+      name: '@zhangman2235/dsh-telnet'
