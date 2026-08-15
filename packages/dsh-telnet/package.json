@@ -52,7 +52,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zhu1090093659/agent-ops.git"
+    "url": "https://github.com/Zhang-Man/agent-ops.git"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsdown",

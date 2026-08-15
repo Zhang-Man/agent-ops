@@ -21,7 +21,7 @@ agent-ops 是面向 [DeepSeek Harness（DSH）](https://github.com/deepseek-ai/D
 dsh plugin --profile web add @linxin666/agent-ops-all
 
 # 源码安装（开发调试）
-git clone https://github.com/zhu1090093659/agent-ops.git
+git clone https://github.com/Zhang-Man/agent-ops.git
 cd agent-ops
 pnpm install && pnpm -r build
 pnpm run install:profile          # 把两个包 link 进 web profile

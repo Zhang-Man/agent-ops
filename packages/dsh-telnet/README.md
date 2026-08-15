@@ -26,7 +26,7 @@ A Telnet plugin for DeepSeek Harness (DSH), sibling of [`@linxin666/dsh-ssh`](..
 
 ```sh
 # From the repository (development)
-git clone https://github.com/zhu1090093659/agent-ops.git
+git clone https://github.com/Zhang-Man/agent-ops.git
 cd agent-ops
 pnpm install && pnpm -r build
 dsh plugin --profile web add link:$(pwd)/packages/dsh-telnet

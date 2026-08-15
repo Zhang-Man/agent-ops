@@ -19,7 +19,7 @@ The aggregate inserts one `ssh` row and one `telnet` row and installs both plugi
 ## From source
 
 ```sh
-git clone https://github.com/zhu1090093659/agent-ops.git
+git clone https://github.com/Zhang-Man/agent-ops.git
 cd agent-ops
 pnpm install && pnpm -r build
 pnpm run install:profile          # = node scripts/install.mjs --profile web

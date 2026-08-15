@@ -19,7 +19,7 @@ dsh plugin --profile web add @linxin666/agent-ops-all
 ## 源码安装
 
 ```sh
-git clone https://github.com/zhu1090093659/agent-ops.git
+git clone https://github.com/Zhang-Man/agent-ops.git
 cd agent-ops
 pnpm install && pnpm -r build
 pnpm run install:profile          # = node scripts/install.mjs --profile web
