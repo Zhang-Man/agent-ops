@@ -443,11 +443,11 @@ html[data-agent-ops-active]:not([data-dsh-taskboard-active]) [class*='centerCol'
   border: 2px solid var(--dsw-alias-state-business-primary);
   border-top-color: transparent;
   border-radius: 50%;
-  animation: dshSshSpin 800ms linear infinite;
+  animation: agentOpsSpin 800ms linear infinite;
   vertical-align: -1px;
 }
 
-@keyframes dshSshSpin {
+@keyframes agentOpsSpin {
   to { transform: rotate(360deg); }
 }
 

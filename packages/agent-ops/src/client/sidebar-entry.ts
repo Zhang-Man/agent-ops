@@ -47,7 +47,7 @@ function newSessionButton(root: HTMLElement): HTMLButtonElement | undefined {
 function createEntry(controller: PanelController): HTMLButtonElement {
   const entry = document.createElement('button')
   entry.type = 'button'
-  entry.dataset.dshSshEntry = ''
+  entry.dataset.agentOpsEntry = ''
   entry.className = css.entry
   entry.setAttribute('aria-label', tt('entry.label'))
   entry.setAttribute('title', tt('entry.tooltip'))

@@ -39,7 +39,7 @@ function ensureXtermCss(): void {
   xtermCssInjected = true
   if (document.querySelector('style[data-agent-ops-xterm]') !== null) return
   const style = document.createElement('style')
-  style.dataset.dshSshXterm = ''
+  style.dataset.agentOpsXterm = ''
   style.textContent = XTERM_CSS
   document.head.appendChild(style)
 }
