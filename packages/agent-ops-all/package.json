@@ -23,6 +23,7 @@
     "url": "https://github.com/Zhang-Man/agent-ops.git"
   },
   "dependencies": {
+    "@zhangman2235/dsh-web-ui-compat": "workspace:*",
     "@zhangman2235/dsh-ssh": "workspace:*",
     "@zhangman2235/dsh-telnet": "workspace:*"
   }

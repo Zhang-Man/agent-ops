@@ -42,7 +42,8 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-web-ui-settings \
   @linxin666/dsh-skins
 ```
 
-`scripts/install.mjs` detects the aggregate and prints exactly this guidance instead of half-installing. Do not install `@zhangman2235/agent-ops-all` together with `@linxin666/dsh-web-ui-all` either — the same row-id collision applies.
+`scripts/install.mjs` detects the aggregate and prints exactly this guidance instead of half-installing.
+The DOM-hook compat shim the web-ui panels need ships with agent-ops itself (`@zhangman2235/dsh-web-ui-compat`, linked by install.mjs) — web-ui-all is not needed for it. Do not install `@zhangman2235/agent-ops-all` together with `@linxin666/dsh-web-ui-all` either — the same row-id collision applies.
 
 ## The agent-remote-ops preset (recommended)
 

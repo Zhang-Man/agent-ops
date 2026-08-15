@@ -10,7 +10,8 @@ agent-ops is the standalone remote-operations family for [DeepSeek Harness (DSH)
 | --- | --- |
 | [`packages/dsh-ssh`](packages/dsh-ssh) | SSH remote ops: host store (`~/.dsh/dsh-ssh.json`, 0600), persistent ssh2 connection pool, exec / PTY web terminal / SFTP transfer / local port-forward tunnels / cluster execution, sidebar panel, and agent tools `ssh_add` / `ssh_list` / `ssh_exec` / `ssh_upload` / `ssh_download` / `ssh_tunnel` / `ssh_cluster` |
 | [`packages/dsh-telnet`](packages/dsh-telnet) | Telnet network-device ops: device store (`~/.dsh/dsh-telnet.json`, 0600), minimal RFC 854 engine (login / enable / paging / prompt detection), readOnly write guard, and agent tools `telnet_list` / `telnet_add` / `telnet_exec` / `telnet_remove` |
-| [`packages/agent-ops-all`](packages/agent-ops-all) | Aggregate carrier: installing it mounts both plugins in one step (npm installs) |
+| [`packages/agent-ops-all`](packages/agent-ops-all) | Aggregate carrier: installing it mounts all three plugins in one step (npm installs) |
+| [`packages/dsh-web-ui-compat`](packages/dsh-web-ui-compat) | Browser shim stamping the legacy `data-pane` DOM hooks the dsh-web-ui family panels expect (vendored from the dsh-web-ui aggregate) |
 
 Two usage workflows, shaped by the bundled `agent-remote-ops` preset (`presets/agent-remote-ops`): Linux server initialization and tuning (apt Tsinghua mirror, npm registry, timezone, base packages, hardening), and network-device configuration changes (read-only recon, candidate commands, user confirmation, write, verify, rollback).
 

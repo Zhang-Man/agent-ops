@@ -49,6 +49,8 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-web-ui-settings \
 ```
 
 `scripts/install.mjs` 检测到该聚合包时会打印上述指引并中止，而不是装一半。
+DOM 挂载所需的 compat shim 由 agent-ops 自带的 `@zhangman2235/dsh-web-ui-compat`
+提供（install.mjs 一并链接），无需 web-ui-all。
 同样不要把 `@zhangman2235/agent-ops-all` 与 `@linxin666/dsh-web-ui-all` 同时
 安装——行 id 冲突相同。
 

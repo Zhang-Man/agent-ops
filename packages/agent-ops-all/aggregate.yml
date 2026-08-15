@@ -3,8 +3,10 @@
 # patch 行（默认 hoisted 布局满足；严格布局需在 profile 配 hoist）。
 # 编辑本文件后运行 `node scripts/aggregate.mjs` 重新生成。
 patchFrom:
+  - ../dsh-web-ui-compat
   - ../dsh-ssh
   - ../dsh-telnet
 deps:
+  - ../dsh-web-ui-compat
   - ../dsh-ssh
   - ../dsh-telnet

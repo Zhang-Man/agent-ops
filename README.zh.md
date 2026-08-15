@@ -10,7 +10,8 @@ agent-ops 是面向 [DeepSeek Harness（DSH）](https://github.com/deepseek-ai/D
 | --- | --- |
 | [`packages/dsh-ssh`](packages/dsh-ssh) | SSH 远程运维：主机配置（`~/.dsh/dsh-ssh.json`，0600）、持久 ssh2 连接池、exec / Web PTY 终端 / SFTP 传输 / 本地端口转发隧道 / 集群执行、侧边栏面板，Agent 工具 `ssh_add` / `ssh_list` / `ssh_exec` / `ssh_upload` / `ssh_download` / `ssh_tunnel` / `ssh_cluster` |
 | [`packages/dsh-telnet`](packages/dsh-telnet) | Telnet 网络设备运维：设备配置（`~/.dsh/dsh-telnet.json`，0600）、RFC 854 最小引擎（登录 / enable / 分页 / 提示符检测）、readOnly 写保护，Agent 工具 `telnet_list` / `telnet_add` / `telnet_exec` / `telnet_remove` |
-| [`packages/agent-ops-all`](packages/agent-ops-all) | 聚合载具包：一条命令装齐两个插件（npm 安装场景） |
+| [`packages/agent-ops-all`](packages/agent-ops-all) | 聚合载具包：一条命令装齐全部三个插件（npm 安装场景） |
+| [`packages/dsh-web-ui-compat`](packages/dsh-web-ui-compat) | 浏览器侧 shim：打上 dsh-web-ui 家族面板依赖的旧版 `data-pane` DOM 钩子（vendor 自 dsh-web-ui 聚合包） |
 
 配套 `agent-remote-ops` 预设（`presets/agent-remote-ops`）固化两类工作流：Linux 服务器初始化与优化（apt 清华源、npm 国内源、时区、基础包、加固），以及网络设备配置变更（只读探测、候选命令、用户确认、写入、验证、回滚）。
 

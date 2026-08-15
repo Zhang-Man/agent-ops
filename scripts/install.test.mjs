@@ -24,7 +24,7 @@ test('webUiAllGuard blocks the conflicting web-ui aggregate with guidance', () =
 test('bundlePackages discovers the two family bundles', () => {
   const packages = bundlePackages(new URL('..', import.meta.url).pathname)
   const names = packages.map((entry) => entry.pkgName).sort()
-  assert.deepEqual(names, ['@zhangman2235/dsh-ssh', '@zhangman2235/dsh-telnet'])
+  assert.deepEqual(names, ['@zhangman2235/dsh-ssh', '@zhangman2235/dsh-telnet', '@zhangman2235/dsh-web-ui-compat'])
 })
 
 test('bundlePackages excludes the aggregate carrier', () => {
