@@ -1,8 +1,9 @@
 # AGENTS.md — agent-ops 仓库规则
 
-DeepSeek Harness 远程运维插件家族 monorepo（dsh-ssh + dsh-telnet + 聚合包）。
-每个插件都是独立 cordis bundle 包，经 `cordis.patch.yml` + profile 机制挂载到
-`dsh web`，绝不修改 DSH 源码。改 `packages/` 前先读 [packages/AGENTS.md](packages/AGENTS.md)。
+agent-ops：DeepSeek Harness 的独立远程运维插件仓库（单插件包，SSH + Telnet
+双协议）。插件是独立 cordis bundle 包，经 `cordis.patch.yml` + profile 机制
+挂载到 `dsh web`，绝不修改 DSH 源码，运行时零插件依赖。改 `packages/` 前先读
+[packages/AGENTS.md](packages/AGENTS.md)。
 
 ## 仓库布局
 
