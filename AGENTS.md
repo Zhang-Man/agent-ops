@@ -8,12 +8,10 @@ DeepSeek Harness 远程运维插件家族 monorepo（dsh-ssh + dsh-telnet + 聚�
 
 ```text
 packages/
-  dsh-ssh/          SSH 运维插件（host 半区 + browser 半区）
-  dsh-telnet/       Telnet 网络设备插件（host 半区）
-  agent-ops-all/    聚合载具包：aggregate.yml 汇总各插件 patch 行与依赖
+  agent-ops/       独立远程运维插件（SSH + Telnet 双引擎、host + browser 双半区）
 presets/agent-remote-ops/  运维人设预设（安装时复制进 ~/.dsh/.agent-presets/）
 shared/tsdown.client.ts    唯一共享构建预设（禁止在包内复制）
-scripts/                   聚合生成 / 源码安装 / 版本校验脚本
+scripts/                   源码安装 / 版本校验脚本
 docs/                      安装与开发长期文档
 .dsh/skills/               agent-ops-release 发布技能
 ```
@@ -26,11 +24,10 @@ pnpm build                  # 全仓构建（pnpm -r build）
 pnpm test                   # 全仓单测
 pnpm typecheck              # 全仓类型检查
 pnpm test:scripts           # scripts/ 下 *.test.mjs
-pnpm aggregate:check        # 聚合包一致性门禁
-pnpm run install:profile    # 把两个插件包 link 进 dsh profile（源码安装）
+pnpm run install:profile    # 把 agent-ops 插件 link 进 dsh profile（源码安装）
 ```
 
-改动提交前至少跑 `pnpm typecheck && pnpm test && pnpm test:scripts && pnpm aggregate:check`。
+改动提交前至少跑 `pnpm typecheck && pnpm test && pnpm test:scripts`。
 
 ## 全局约定
 
@@ -48,8 +45,9 @@ pnpm run install:profile    # 把两个插件包 link 进 dsh profile（源码�
 - 独立 bundle 包：`"type": "module"`，node `^22.19 || >=24`，`"dsh": { "bundle":
   { "patch": "./cordis.patch.yml" } }` 声明 bundle 激活；host 半区在
   `src/index.ts`，browser 半区在 `src/client/`，共享纯逻辑在 `src/core/`。
-- 每个包必须有 `vitest run` 可通过的测试；聚合载具包可无单测，但
-  `scripts/aggregate.mjs --check` 必须通过。
+- 插件包必须有 `vitest run` 可通过的测试。
+- **运行时零依赖**：agent-ops 不依赖任何其他插件包（含 DOM 钩子在内全部
+  自包含在自身 client bundle 中）；与其他插件的共存仅是"可选叠加"。
 - 涉及凭据 / 远程执行 / 安全语义的改动必须同步更新该包 README 的安全模型一节
   与测试。
 
@@ -59,7 +57,7 @@ pnpm run install:profile    # 把两个插件包 link 进 dsh profile（源码�
   `scripts/verify-version.mjs` 校验）；npm 不允许重发已发布版本号。
 - 发布流程见 `.dsh/skills/agent-ops-release/SKILL.md`：本地全绿 → 统一 bump →
   提交 → 推 vX.Y.Z tag 触发 Actions 发布管线。
-- 发布后验证：`npm view @zhangman2235/agent-ops-all version` 等于 tag 版本。
+- 发布后验证：`npm view @zhangman2235/agent-ops version` 等于 tag 版本。
 
 ## 分层指令体系
 

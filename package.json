@@ -7,7 +7,6 @@
     "build": "pnpm -r build",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
-    "aggregate:check": "node scripts/aggregate.mjs --check",
     "test:scripts": "node --test scripts/*.test.mjs",
     "install:profile": "node scripts/install.mjs"
   },

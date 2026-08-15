@@ -1,7 +1,0 @@
-# dsh-web-ui-compat bundle patch: inserts the compat shim row into the
-# profile roster. The shim stamps the legacy data-pane / data-dsh-frame DOM
-# hooks that DOM-mounting dsh-web-ui family plugins (and the dsh-ssh panel)
-# expect. Vendored from the dsh-web-ui family aggregate.
-- insert:
-    - id: ui-web-ui-compat
-      name: '@zhangman2235/dsh-web-ui-compat'

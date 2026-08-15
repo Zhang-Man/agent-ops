@@ -1,0 +1,14 @@
+# agent-ops bundle patch: inserts the standalone plugin row into the profile
+# roster. Applied as a profile bundle layer (the `dsh.bundle.patch` manifest
+# field) over dsh-base; activate with
+# `dsh plugin --profile <name> add link:~/agent-ops/packages/agent-ops`.
+#
+# The row is a bare plugin by package name: the node half (exports ".") runs
+# in the host process (SSH + Telnet engines, /api/agent-ops routes, agent
+# tools), and the `dsh.client` declaration in package.json makes the browser
+# half (exports "./client", served at /plugins/<id>/client.js) load in the
+# web GUI. The plugin is self-contained: its client bundle ships its own
+# DOM-hook shim and depends on no other plugin at runtime.
+- insert:
+    - id: agent-ops
+      name: '@zhangman2235/agent-ops'

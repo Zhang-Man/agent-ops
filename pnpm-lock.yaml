@@ -15,19 +15,7 @@ importers:
         specifier: ^0.22.2
         version: 0.22.2(typescript@5.7.3)
 
-  packages/agent-ops-all:
-    dependencies:
-      '@zhangman2235/dsh-ssh':
-        specifier: workspace:*
-        version: link:../dsh-ssh
-      '@zhangman2235/dsh-telnet':
-        specifier: workspace:*
-        version: link:../dsh-telnet
-      '@zhangman2235/dsh-web-ui-compat':
-        specifier: workspace:*
-        version: link:../dsh-web-ui-compat
-
-  packages/dsh-ssh:
+  packages/agent-ops:
     dependencies:
       '@xterm/addon-fit':
         specifier: ^0.11.0
@@ -108,54 +96,6 @@ importers:
       schemastery:
         specifier: ^3.18.0
         version: 3.18.0
-      tsdown:
-        specifier: 0.22.2
-        version: 0.22.2(typescript@5.7.3)
-      typescript:
-        specifier: ~5.7.2
-        version: 5.7.3
-      vitest:
-        specifier: ^3.0.0
-        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.20.1)(jsdom@25.0.1)(lightningcss@1.32.0)
-
-  packages/dsh-telnet:
-    devDependencies:
-      '@deepseek-ai/cordis':
-        specifier: ^4.0.1
-        version: 4.0.1(@deepseek-ai/cordis-plugin-include@1.0.6)(@deepseek-ai/cordis-plugin-loader@1.0.2)
-      '@deepseek-ai/dsh-llm':
-        specifier: ^0.1.0-rc.6
-        version: 0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-attachment@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-brand@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))(@deepseek-ai/dsh-brand@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1))(@deepseek-ai/dsh-timeout@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))
-      '@deepseek-ai/dsh-system-prompt':
-        specifier: ^0.1.0-rc.6
-        version: 0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1))(@deepseek-ai/dsh-llm@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-attachment@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-brand@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))(@deepseek-ai/dsh-brand@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1))(@deepseek-ai/dsh-timeout@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1))))(@deepseek-ai/dsh-scope@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-invariants@0.1.0-rc.6(@deepseek-ai/cordis@4.0.1)))
-      '@deepseek-ai/dsh-tools':
-        specifier: ^0.1.0-rc.6
-        version: 0.1.0-rc.6(f8724372086ccc1457fc84e7becee2e0)
-      '@types/node':
-        specifier: ^22.20.0
-        version: 22.20.1
-      schemastery:
-        specifier: ^3.18.0
-        version: 3.18.0
-      tsdown:
-        specifier: 0.22.2
-        version: 0.22.2(typescript@5.7.3)
-      typescript:
-        specifier: ~5.7.2
-        version: 5.7.3
-      vitest:
-        specifier: ^3.0.0
-        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.20.1)(jsdom@25.0.1)(lightningcss@1.32.0)
-
-  packages/dsh-web-ui-compat:
-    devDependencies:
-      '@deepseek-ai/cordis':
-        specifier: ^4.0.1
-        version: 4.0.1(@deepseek-ai/cordis-plugin-include@1.0.6)(@deepseek-ai/cordis-plugin-loader@1.0.2)
-      '@types/node':
-        specifier: ^22.20.0
-        version: 22.20.1
       tsdown:
         specifier: 0.22.2
         version: 0.22.2(typescript@5.7.3)

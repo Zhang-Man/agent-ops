@@ -11,10 +11,10 @@ agent-ops 家族在 dsh 机器上的完整安装方式：全新 dsh、与 dsh-we
 ## npm 安装（发布后推荐）
 
 ```sh
-dsh plugin --profile web add @zhangman2235/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops
 ```
 
-聚合包会插入一条 `ssh` 行与一条 `telnet` 行并装齐两个插件，之后重启 `dsh web`。
+单包安装即获得 SSH + Telnet 全部能力与侧边栏面板，之后重启 `dsh web`。
 
 ## 源码安装
 
@@ -25,19 +25,16 @@ pnpm install && pnpm -r build
 pnpm run install:profile          # = node scripts/install.mjs --profile web
 ```
 
-`install.mjs` 用官方 `dsh plugin add link:` 流程链接两个插件包，需要时自动做与
-dsh-web-ui 的共存修复，并用 `dsh --profile web --dump-config` 校验组合树
-（`ssh` 行与 `telnet` 行各恰好一条）。之后重启 `dsh web`。
-
-`agent-ops-all` 聚合包不做源码链接：它的 `workspace:*` 依赖只有在发布后才可
-解析，因此源码装单体包、npm 装聚合包。
+`install.mjs` 用官方 `dsh plugin add link:` 流程链接插件包，检测到与
+dsh-web-ui 聚合包冲突时打印替换指引，并用 `dsh --profile web --dump-config`
+校验组合树（`agent-ops` 行恰好一条）。之后重启 `dsh web`。
 
 ## 与 dsh-web-ui 家族（皮肤、面板）共存
 
-`@linxin666/dsh-web-ui-all` 聚合包本身就会插入自己的 `ssh` 行（行名
-`@linxin666/dsh-ssh`），与本家族的 `ssh` 行 id 冲突——dsh loader 拒绝重复行
-id，没有静默绕过方式。共存做法：把聚合包替换为各单体 web-ui 包（即聚合包的
-全部内容除去它的 dsh-ssh 子包），再正常安装 agent-ops：
+`@linxin666/dsh-web-ui-all` 聚合包会挂载 `@linxin666/dsh-ssh`，其 `ssh_*`
+工具与本插件重复注册，插件激活会失败。共存做法：把聚合包替换为各单体
+web-ui 包（即聚合包的全部内容除去它的 dsh-ssh 子包），再正常安装
+agent-ops：
 
 ```sh
 dsh plugin --profile web remove @linxin666/dsh-web-ui-all
@@ -49,10 +46,9 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-web-ui-settings \
 ```
 
 `scripts/install.mjs` 检测到该聚合包时会打印上述指引并中止，而不是装一半。
-DOM 挂载所需的 compat shim 由 agent-ops 自带的 `@zhangman2235/dsh-web-ui-compat`
-提供（install.mjs 一并链接），无需 web-ui-all。
-同样不要把 `@zhangman2235/agent-ops-all` 与 `@linxin666/dsh-web-ui-all` 同时
-安装——行 id 冲突相同。
+web-ui 单体面板所需的 DOM 钩子由 agent-ops 内置 shim 打上，无需任何第三方
+兼容包。
+冲突在工具层：web-ui-all 的 dsh-ssh 子包与本插件会重复注册 `ssh_*` 工具。
 
 ## agent-remote-ops 预设（推荐）
 
@@ -69,8 +65,8 @@ cp -r presets/agent-remote-ops ~/.dsh/.agent-presets/
 
 ## 验证清单
 
-1. 组合树：`dsh --profile web --dump-config` 中 `ssh` 行与 `telnet` 行各恰好一条。
-2. GUI：重启后侧边栏出现「SSH」入口（主机管理、Web 终端）。
+1. 组合树：`dsh --profile web --dump-config` 中 `agent-ops` 行恰好一条。
+2. GUI：重启后侧边栏出现「远程运维」入口（主机 / 设备管理、Web 终端）。
 3. 新会话 Agent 工具：`ssh_add` / `ssh_list` / `ssh_exec` / `ssh_upload` /
    `ssh_download` / `ssh_tunnel` / `ssh_cluster` 与 `telnet_list` / `telnet_add` /
    `telnet_exec` / `telnet_remove` 齐全。

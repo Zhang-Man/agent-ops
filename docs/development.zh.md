@@ -21,32 +21,30 @@ Server。`dsh-ssh/tests/engine.test.ts` 里的真实 sshd SFTP 测试额外要�
 
 - 每个插件都是 cordis bundle 包：`"type": "module"`，node `^22.19 || >=24`，
   `dsh.bundle.patch` 指向包内 `cordis.patch.yml`；有浏览器半区时用 `dsh.client`
-  声明注入与 `platform: "web"`（参照 `packages/dsh-ssh`）。
+  声明注入与 `platform: "web"`（参照 `packages/agent-ops`）。
 - host 半区在 `src/index.ts`，browser 半区在 `src/client/`，两侧共享纯逻辑在
   `src/core/`。
 - 类型只来自 `@deepseek-ai/*` 官方 NPM SDK（devDependencies）；运行时 peer 写
   peerDependencies；tsconfig 不得指向任何 DSH 源码 checkout。
 - 构建只用共享预设 `shared/tsdown.client.ts`，禁止复制进包内；host-only 包
   同样用该预设（无 `src/client/index.ts` 时自动跳过浏览器面，参照
-  `packages/dsh-telnet`）。
+  `packages/agent-ops`）。
 - 每个插件包必须有可通过的 vitest 测试（`pnpm test`）。
 - README 双语三件套（README.md / README.zh.md / README.i18n.yaml）；涉安全包
   必须有「安全模型」一节。
 - 全仓禁 emoji；提交走 Conventional Commits（`feat(scope): ...`）。
 
-## 新增运维插件
+## 扩展插件能力（新协议 / 新面板）
 
-1. 以 `packages/dsh-telnet`（纯 host）或 `packages/dsh-ssh`（双半区）为骨架复制。
-2. 在 `src/` 实现插件：工具经 `ctx.tools` 注册、插件说明经
-   `ctx.systemPrompt.section` 宣告、所有副作用放进 `ctx.effect` 的 disposer。
+1. host 半区：新引擎放 `src/<name>-engine.ts`、存储放 `src/<name>-store.ts`、
+   工具工厂放 `src/<name>-tools.ts`，在 `src/index.ts` 注册（工具经
+   `ctx.tools` 注册、能力经 `ctx.systemPrompt.section` 宣告、所有副作用放进
+   `ctx.effect` 的 disposer）。
+2. browser 半区：面板组件放 `src/client/panel/`，入口与侧边栏在
+   `src/client/index.ts` / `src/client/sidebar-entry.ts` 注册。
 3. 在 `tests/` 写 vitest 测试（优先 node:net 内嵌服务 / 进程内服务器）。
-4. 把新包登记进 `packages/agent-ops-all/aggregate.yml`（`patchFrom` 与 `deps`
-   各加一行），运行 `node scripts/aggregate.mjs` 与
-   `node scripts/aggregate.mjs --check`。
-5. 把新行 id 加进 `scripts/install.mjs` 的校验列表，并扩展
-   `scripts/install.test.mjs`。
-6. 更新根 README 包表与本文件。
-7. 全门禁：`pnpm typecheck && pnpm test && pnpm test:scripts && pnpm aggregate:check`。
+4. 更新本包 README（能力表 / 安全模型）与根文档。
+5. 全门禁：`pnpm typecheck && pnpm test && pnpm test:scripts`。
 
 ## 发版
 

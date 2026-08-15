@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 /**
- * Install every agent-ops plugin into a dsh profile from source.
+ * Install the agent-ops plugin into a dsh profile from source.
  *
- * For each bundle package under packages/ (package.json carries
- * "dsh.bundle.patch"): `dsh plugin --profile <name> add link:<absolute path>`
- * — the same official flow a user runs by hand per package.
+ * The bundle package under packages/ (package.json carries
+ * "dsh.bundle.patch") is linked with the official
+ * `dsh plugin --profile <name> add link:<absolute path>` flow.
  *
  * Compatibility guard: the profile must NOT depend on
- * @linxin666/dsh-web-ui-all. That aggregate inserts its own `ssh` row (name
- * @linxin666/dsh-ssh), which collides with this family's `ssh` row id — the
- * dsh loader rejects duplicate row ids. Install the individual web-ui
- * packages (skins, panels) instead; the guard prints the exact commands.
+ * @linxin666/dsh-web-ui-all. That aggregate mounts @linxin666/dsh-ssh,
+ * which registers the same ssh_* tools as this plugin — the second tool
+ * registration fails at activation. Install the individual web-ui packages
+ * (skins, panels) instead; the guard prints the exact commands.
  *
  * Then verification: `dsh --profile <name> --dump-config` must show exactly
- * one `ssh` row and one `telnet` row.
+ * one `agent-ops` row.
  *
  * The agent-ops-all aggregate is NOT linked from source: its workspace:*
  * dependencies only resolve after publishing, so source installs link the
@@ -101,7 +101,7 @@ export function webUiAllGuard(dependencyNames, profile = 'web') {
   if (!dependencyNames.includes(WEB_UI_ALL)) return { blocked: false, reason: '', commands: [] }
   return {
     blocked: true,
-    reason: `${WEB_UI_ALL} inserts its own ssh row (name @linxin666/dsh-ssh), which collides with this family's ssh row id; install the individual web-ui packages instead`,
+    reason: `${WEB_UI_ALL} mounts @linxin666/dsh-ssh, which registers the same ssh_* tools as agent-ops (duplicate tool registration fails at activation); install the individual web-ui packages instead`,
     commands: [
       `dsh plugin --profile ${profile} remove ${WEB_UI_ALL}`,
       `dsh plugin --profile ${profile} add ${WEB_UI_INDIVIDUAL.join(' ')}`,
@@ -162,7 +162,7 @@ function main() {
     process.exit(1)
   }
   let failed = false
-  for (const id of ['ssh', 'telnet']) {
+  for (const id of ['agent-ops']) {
     const occurrences = dump.split('\n').filter((line) => line.trim() === `- id: ${id}`).length
     const ok = occurrences === 1
     console.log(`install: row '${id}' occurrences: ${occurrences} ${ok ? '(ok)' : '(expected exactly 1)'}`)

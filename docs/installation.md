@@ -11,10 +11,10 @@ How to install the agent-ops family onto a dsh machine, covering a fresh dsh, co
 ## From npm (recommended once published)
 
 ```sh
-dsh plugin --profile web add @zhangman2235/agent-ops-all
+dsh plugin --profile web add @zhangman2235/agent-ops
 ```
 
-The aggregate inserts one `ssh` row and one `telnet` row and installs both plugins. Restart `dsh web` afterwards.
+One package installs the SSH + Telnet engines, the sidebar panel, and all agent tools. Restart `dsh web` afterwards.
 
 ## From source
 
@@ -25,13 +25,11 @@ pnpm install && pnpm -r build
 pnpm run install:profile          # = node scripts/install.mjs --profile web
 ```
 
-`install.mjs` links the two bundle packages with the official `dsh plugin add link:` flow, applies the coexistence fixup below when needed, and verifies the composition with `dsh --profile web --dump-config` (exactly one `ssh` row, one `telnet` row). Restart `dsh web` afterwards.
-
-The `agent-ops-all` aggregate is not linked from source: its `workspace:*` dependencies only resolve after publishing, so source installs link the individual packages and npm installs use the aggregate.
+`install.mjs` links the bundle package with the official `dsh plugin add link:` flow, prints replacement guidance when the web-ui aggregate conflict is detected, and verifies the composition with `dsh --profile web --dump-config` (exactly one `agent-ops` row). Restart `dsh web` afterwards.
 
 ## Coexisting with the dsh-web-ui family (skins, panels)
 
-The `@linxin666/dsh-web-ui-all` aggregate inserts its own `ssh` row (name `@linxin666/dsh-ssh`), which collides with this family's `ssh` row id — the dsh loader rejects duplicate row ids. There is no silent workaround: replace the aggregate with the individual web-ui packages (everything it bundles except its dsh-ssh child), then install agent-ops normally:
+The `@linxin666/dsh-web-ui-all` aggregate mounts `@linxin666/dsh-ssh`, whose `ssh_*` tools duplicate this plugin's registrations — the duplicate tool registration fails at activation. There is no silent workaround: replace the aggregate with the individual web-ui packages (everything it bundles except its dsh-ssh child), then install agent-ops normally:
 
 ```sh
 dsh plugin --profile web remove @linxin666/dsh-web-ui-all
@@ -43,7 +41,7 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-web-ui-settings \
 ```
 
 `scripts/install.mjs` detects the aggregate and prints exactly this guidance instead of half-installing.
-The DOM-hook compat shim the web-ui panels need ships with agent-ops itself (`@zhangman2235/dsh-web-ui-compat`, linked by install.mjs) — web-ui-all is not needed for it. Do not install `@zhangman2235/agent-ops-all` together with `@linxin666/dsh-web-ui-all` either — the same row-id collision applies.
+The DOM hooks the web-ui panels need are stamped by this plugin's internal shim — no third-party compat package is needed. The conflict is at the tool layer: web-ui-all's dsh-ssh child and this plugin would both register `ssh_*` tools.
 
 ## The agent-remote-ops preset (recommended)
 
@@ -57,8 +55,8 @@ Create new sessions with the **远程运维** preset (or set it as the default i
 
 ## Verification checklist
 
-1. Composition: `dsh --profile web --dump-config` shows exactly one `ssh` row and one `telnet` row.
-2. GUI: the sidebar has the SSH entry (host manager, web terminal) after restart.
+1. Composition: `dsh --profile web --dump-config` shows exactly one `agent-ops` row.
+2. GUI: the sidebar has the remote-operations entry (host / device manager, web terminal) after restart.
 3. Agent tools in a new session: `ssh_add` / `ssh_list` / `ssh_exec` / `ssh_upload` / `ssh_download` / `ssh_tunnel` / `ssh_cluster` and `telnet_list` / `telnet_add` / `telnet_exec` / `telnet_remove`.
 4. Data files: `~/.dsh/dsh-ssh.json` and `~/.dsh/dsh-telnet.json` appear on first use, mode 0600.
 
